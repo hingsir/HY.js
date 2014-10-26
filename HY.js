@@ -23,7 +23,7 @@
         }
     };
     HY.event = {
-        addEventHandler: function (target, event, handler) {
+        addHandler: function (target, event, handler) {
             if (target.addEventListener) {
                 target.addEventListener(event, handler, false);
             } else if (target.attachEvent) {
@@ -32,7 +32,7 @@
                 target['on' + event ] = handler;
             }
         },
-        removeEventHandler: function (target, event, handler) {
+        removeHandler: function (target, event, handler) {
             if (target.removeEventListener) {
                 target.removeEventListener(event, handler, false);
             } else if (target.detachEvent) {
@@ -40,6 +40,26 @@
             } else {
                 target['on' + event ] = null;
             }
+        },
+        preventDefault: function (event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+        },
+        stopProgation: function (event) {
+            if (event.stopProgation) {
+                event.stopProgation();
+            } else {
+                event.cancelBubble();
+            }
+        },
+        getEvent: function (event) {
+            return event ? event : window.event;
+        },
+        getType: function (event) {
+            return event.type;
         },
         getTarget: function (event) {
             return event.target || event.srcElement;
@@ -107,7 +127,7 @@
                 return ('0000' + o[$]).substr(-$.length);
             })
             return format;
-        } ,
+        },
 
         formatTemplate: function (template, data) {
             template = template.replace(/(\$\{((\w+\.?)+)\})/gm, function ($1, $2, $3) {

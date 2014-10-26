@@ -1,4 +1,4 @@
 HY.js
 =====
 
-A javascript framework just for self-learning purpose.
+A JavaScript framework just for self-learning purpose.
